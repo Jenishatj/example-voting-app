@@ -37,7 +37,8 @@ jobs:
       - name: Run Jest
         working-directory: ./result
         run: npm test
-build-and-push:
+
+  build-and-push:
     needs: [test-vote, test-result]
     runs-on: ubuntu-latest
     strategy:
@@ -73,4 +74,4 @@ build-and-push:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
-          cache-to: type=gha,mode=max  
+          cache-to: type=gha,mode=max
