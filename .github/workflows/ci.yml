@@ -95,8 +95,10 @@ jobs:
             # Export the Postgres password
             export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
             
-            # Pull the absolute latest images from Docker Hub (ADD HYPHEN HERE)
-            docker-compose pull
+            # Enable modern BuildKit for older docker-compose versions
+            export DOCKER_BUILDKIT=1
+            export COMPOSE_DOCKER_CLI_BUILD=1
             
-            # Restart the stack in the background (ADD HYPHEN HERE)
-            docker-compose up -d
+            # Pull latest images and restart the stack
+            docker-compose pull
+            docker-compose up -d --no-build
