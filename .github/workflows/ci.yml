@@ -101,4 +101,4 @@ jobs:
             
             # Pull latest images and restart the stack
             docker-compose pull
-            docker-compose up -d
+            docker-compose up -d --no-build
