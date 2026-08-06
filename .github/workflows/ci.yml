@@ -89,14 +89,14 @@ jobs:
           username: ${{ secrets.VM_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # Navigate to the app directory (adjust this path if your app is stored elsewhere on the VM)
+            # Navigate to the app directory
             cd /home/${{ secrets.VM_USERNAME }}/example-voting-app
             
-            # Export the Postgres password so docker-compose can use it
+            # Export the Postgres password
             export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
             
-            # Pull the absolute latest images from Docker Hub
-            docker compose pull
+            # Pull the absolute latest images from Docker Hub (ADD HYPHEN HERE)
+            docker-compose pull
             
-            # Restart the stack in the background, picking up the new images
-            docker compose up -d
+            # Restart the stack in the background (ADD HYPHEN HERE)
+            docker-compose up -d
