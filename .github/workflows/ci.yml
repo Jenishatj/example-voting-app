@@ -75,3 +75,28 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+  deploy:
+    needs: [build-and-push]
+    # This ensures it ONLY runs when merged into main, never on a feature branch PR
+    if: github.ref == 'refs/heads/main' 
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Deploy to VM via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Navigate to the app directory (adjust this path if your app is stored elsewhere on the VM)
+            cd /home/${{ secrets.VM_USERNAME }}/example-voting-app
+            
+            # Export the Postgres password so docker-compose can use it
+            export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+            
+            # Pull the absolute latest images from Docker Hub
+            docker compose pull
+            
+            # Restart the stack in the background, picking up the new images
+            docker compose up -d
