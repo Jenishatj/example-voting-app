@@ -89,16 +89,19 @@ jobs:
           username: ${{ secrets.VM_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # Navigate to the app directory
-            cd /home/${{ secrets.VM_USERNAME }}/example-voting-app
-            
-            # Export the Postgres password
-            export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-            
-            # Enable modern BuildKit for older docker-compose versions
-            export DOCKER_BUILDKIT=1
-            export COMPOSE_DOCKER_CLI_BUILD=1
-            
-            # Pull latest images and restart the stack
-            docker-compose pull
-            docker-compose up -d --no-build
+          # Navigate to the app directory
+          cd /home/${{ secrets.VM_USERNAME }}/example-voting-app
+
+          # Sync the server's files with GitHub (THIS IS THE NEW LINE)
+          git pull origin main
+
+          # Export the Postgres password
+          export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+
+          # Enable BuildKit for older docker-compose versions
+          export DOCKER_BUILDKIT=1
+          export COMPOSE_DOCKER_CLI_BUILD=1
+
+          # Pull latest images and restart the stack
+          docker-compose pull
+          docker-compose up -d --no-build
