@@ -41,10 +41,12 @@ services:
       - back-tier
 
   worker:
-    image: <your_dockerhub_username>/worker:latest  # Swap in your actual Docker Hub username/image name!
+    image: YOUR_ACTUAL_DOCKERHUB_USERNAME/worker:latest
     depends_on:
-      - "redis"
-      - "db"
+      redis:
+        condition: service_healthy
+      db:
+        condition: service_healthy
     depends_on:
       redis:
         condition: service_healthy 
