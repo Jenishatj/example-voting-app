@@ -41,7 +41,7 @@ services:
       - back-tier
 
   worker:
-    image: YOUR_ACTUAL_DOCKERHUB_USERNAME/worker:latest
+    image: jenishatj/worker:latest
     depends_on:
       redis:
         condition: service_healthy
