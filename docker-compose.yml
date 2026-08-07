@@ -22,8 +22,8 @@ services:
     ports:
       - "8080:80"
     environment:
-      - OPTION_A=Instagram
-      - OPTION_B=Facebook
+      - OPTION_A=CATS
+      - OPTION_B=Dogs
     networks:
       - front-tier
       - back-tier
