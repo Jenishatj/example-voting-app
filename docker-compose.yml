@@ -22,8 +22,8 @@ services:
     ports:
       - "8080:80"
     environment:
-      - OPTION_A=Insta
-      - OPTION_B=Snap
+      - OPTION_A=Cats
+      - OPTION_B=Dogs
     networks:
       - front-tier
       - back-tier
